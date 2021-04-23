@@ -22,10 +22,23 @@ a, b = (365, 3636)
 print(a)
 print(b)
 
-d1 = {'a' : 'abcva', 'b': 'sggsgb', 'c': 'def'}
+d1 = {'a': 'abcva', 'b': 'sggsgb', 'c': 'def'}
 print(d1['b'])
 
 for k in d1.keys():
     print('Key: %s Value: %s' % (k, d1[k]))
 
 print(list(d1.values()))
+
+day = 7 # 1-7
+if day==1:
+    print('Monday')
+elif day==2:
+    print('Tuesday')
+#...
+elif day==7:
+    print('Sunday')
+
+
+days_d = {1: 'Monday', 2: 'Tuesday', 7: 'Sunday'}
+print(days_d[day])
