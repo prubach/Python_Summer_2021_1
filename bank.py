@@ -19,10 +19,9 @@ class Account:
         self._balance = 0
 
     def deposit(self, amount):
-        if amount > 0:
-            self._balance += amount
-        else:
-            print("Incorrect amount")
+        if amount <= 0:
+            raise BankException("Incorrect amount")
+        self._balance += amount
 
     def charge(self, amount):
         if amount < 0:
@@ -36,6 +35,11 @@ class Account:
         return '{}[{},{},{}]'.format(self.__class__.__name__, self.id, self.customer.lastname, self._balance)
 
 
+class BankException(Exception):
+    pass
+
+
+
 
 c1 = Customer('Anna', 'Smith')
 print(c1)
@@ -47,7 +51,7 @@ a3 = Account(c2)
 print(a1)
 a1.deposit(100)
 print(a1)
-a1.charge(-50)
+a1.deposit(-50)
 print(a1)
 a1.charge(80)
 print(a1)
