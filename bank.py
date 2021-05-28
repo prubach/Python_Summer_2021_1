@@ -34,6 +34,28 @@ class Account:
     def __repr__(self):
         return '{}[{},{},{}]'.format(self.__class__.__name__, self.id, self.customer.lastname, self._balance)
 
+class Bank:
+    def __init__(self):
+        self.account_list = []
+        self.customer_list = []
+
+    def create_customer(self, firstname, lastname):
+        c = Customer(firstname, lastname)
+        self.customer_list.append(c)
+        return c
+
+    def create_account(self, customer):
+        #TODO
+        pass
+
+    def transfer(self, from_acc_id, to_acc_id, amount):
+        # 1 . Search for account given its id
+        #TODO
+        pass
+
+    def __repr__(self):
+        return 'Bank[{},{}]'.format(self.customer_list, self.account_list)
+
 
 class BankException(Exception):
     def __init__(self, msg, balance=-100):
@@ -47,10 +69,22 @@ class InsufficientBalanceException(BankException):
     pass
 
 
-c1 = Customer('Anna', 'Smith')
+
+
+
+
+bank = Bank()
+
+c1 = bank.create_customer('Anna', 'Smith')
 print(c1)
-c2 = Customer('John', 'Brown')
+c2 = bank.create_customer('John', 'Brown')
 print(c2)
+print('-------')
+print(bank)
+print('-------')
+
+
+
 a1 = Account(c1)
 a2 = Account(c2)
 a3 = Account(c2)
