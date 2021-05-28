@@ -20,14 +20,15 @@ class Account:
 
     def deposit(self, amount):
         if amount <= 0:
-            raise IncorrectAmountException("Incorrect amount")
+            raise IncorrectAmountException("Incorrect amount", self._balance)
         self._balance += amount
 
     def charge(self, amount):
         if amount < 0:
-            raise IncorrectAmountException("Incorrect amount")
+            raise IncorrectAmountException("Incorrect amount", self._balance)
         if amount > self._balance:
-            raise InsufficientBalanceException("Insufficient Balance, current balance is: " + self._balance)
+            raise InsufficientBalanceException("Insufficient Balance, current balance is: " + str(self._balance), self._balance)
+            #raise InsufficientBalanceException("Insufficient Balance, current balance is: " + self._balance)
         self._balance -= amount
 
     def __repr__(self):
@@ -35,7 +36,9 @@ class Account:
 
 
 class BankException(Exception):
-    pass
+    def __init__(self, msg, balance=-100):
+        super().__init__(msg)
+        self.balance = balance
 
 class IncorrectAmountException(BankException):
     pass
@@ -52,9 +55,18 @@ a1 = Account(c1)
 a2 = Account(c2)
 a3 = Account(c2)
 print(a1)
-a1.deposit(100)
-print(a1)
-a1.deposit(-50)
-print(a1)
+try:
+    a1.deposit(100)
+    print(a1)
+    b = 50
+    #print('gsg' + b)
+    a1.charge(150)
+    print(a1)
+except IncorrectAmountException as iae:
+    print('Incorrect.. Exception raised: ' + str(iae))
+except InsufficientBalanceException as iae:
+    #print('Exception raised: ')
+    print('Exception raised: ' + str(iae))
+    print(iae.balance)
 a1.charge(80)
 print(a1)
