@@ -20,16 +20,15 @@ class Account:
 
     def deposit(self, amount):
         if amount <= 0:
-            raise BankException("Incorrect amount")
+            raise IncorrectAmountException("Incorrect amount")
         self._balance += amount
 
     def charge(self, amount):
         if amount < 0:
-            print("Incorrect amount")
-        elif amount > self._balance:
-            print("Insufficient balance")
-        else:
-            self._balance -= amount
+            raise IncorrectAmountException("Incorrect amount")
+        if amount > self._balance:
+            raise InsufficientBalanceException("Insufficient Balance, current balance is: " + self._balance)
+        self._balance -= amount
 
     def __repr__(self):
         return '{}[{},{},{}]'.format(self.__class__.__name__, self.id, self.customer.lastname, self._balance)
@@ -38,7 +37,11 @@ class Account:
 class BankException(Exception):
     pass
 
+class IncorrectAmountException(BankException):
+    pass
 
+class InsufficientBalanceException(BankException):
+    pass
 
 
 c1 = Customer('Anna', 'Smith')
