@@ -3,6 +3,7 @@ import time
 
 class MyThread(threading.Thread):
     def __init__(self, id, name, delay, counter):
+        threading.Thread.__init__(self)
         self.id = id
         self.name = name
         self.counter = counter
