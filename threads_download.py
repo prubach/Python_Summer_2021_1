@@ -25,6 +25,7 @@ def run_workers(mydir):
     queue = Queue()
     for n in range(4):
         worker = DownloadWorker(queue)
+        worker.daemon = True
         worker.start()
     for p in proteins:
         queue.put((mydir, p))
