@@ -4,3 +4,4 @@ jupyter
 beautifulsoup4
 html5lib
 Pillow
+matplotlib
