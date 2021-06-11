@@ -1,5 +1,7 @@
 from queue import Queue
 from threading import Thread
+from multiprocessing.pool import Pool
+from functools import partial
 
 from knotprot_download import time_it, download_link, setup_download_dir, get_proteins
 
@@ -23,7 +25,7 @@ class DownloadWorker(Thread):
 def run_workers(mydir):
     proteins = get_proteins()
     queue = Queue()
-    for n in range(4):
+    for n in range(8):
         worker = DownloadWorker(queue)
         worker.daemon = True
         worker.start()
@@ -31,9 +33,19 @@ def run_workers(mydir):
         queue.put((mydir, p))
     queue.join()
 
+### Multiprocessing
+def run_multiprocessing(mydir):
+    proteins = get_proteins()
+    download = partial(download_link, mydir)
+#    for p in proteins:
+#        download(p)
+    with Pool(16) as pool:
+        pool.map(download, proteins)
 
 mydir = setup_download_dir()
 # Sequential
 #time_it(run_sequentially, mydir)
 # Workers
-time_it(run_workers, mydir)
+#time_it(run_workers, mydir)
+# Multiprocessing
+time_it(run_multiprocessing, mydir)
